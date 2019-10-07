@@ -27,7 +27,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
+
+		<dependency>	<!-- Чтобы проинициализировался DataSource необходимо starter-jdbc либо starter-data-jpa -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+				
 		<dependency>
       		<groupId>org.springframework.boot</groupId>
       		<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -57,13 +62,38 @@
 		</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+  <build>
+  	<finalName>${project.artifactId}</finalName>	<!-- так результат сборки просто /target/TechnolabTest.jar без версии -->
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <plugin>										<!-- тут генерируем свойство ${project.build} со значением - время сборки -->
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <version>1.2</version>
+        <executions>
+          <execution>
+            <phase>initialize</phase>
+            <goals>
+              <goal>create-timestamp</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <timestampFormat>yyyy-MM-dd HH:mm</timestampFormat>
+          <timestampPropertyName>project.build</timestampPropertyName>
+        </configuration>
+      </plugin>
+    </plugins>
+    <resources>
+      <resource>									<!-- тут указываем что надо подменить в папке вставки вида @xxx@ (для не Spring boot - ${xxx}) значениями.  
+      													Например ${project.artifactId} подменится на TechnolabTest -->
+        <directory>src/main/resources</directory>	
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
 
 </project>
