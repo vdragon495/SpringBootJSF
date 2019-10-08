@@ -17,7 +17,7 @@ import ru.technolab.demo.dao.BookRepository;
 @Scope(value = "session")
 @Component(value = "books")
 @ELBeanName(value = "books")
-@Join(path = "/books", to = "/books.jsf")
+@Join(path = "/books", to = "/books.xhtml")
 public class BooksBean {
 	
     @Autowired

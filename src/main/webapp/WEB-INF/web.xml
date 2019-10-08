@@ -7,7 +7,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.jsf</url-pattern>
+        <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -16,7 +16,7 @@
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
     
-    <welcome-file-list>
-    	<welcome-file>index.jsf</welcome-file>
-  	</welcome-file-list>
+    <!-- Не работает! welcome-file-list>
+    	<welcome-file>index.html</welcome-file>
+  	</welcome-file-list -->
 </web-app>
