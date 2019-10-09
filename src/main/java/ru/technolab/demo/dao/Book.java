@@ -6,6 +6,8 @@ public class Book {
 	private String name;
 	private String usersLogin;
 	
+	public Book() {}
+	
 	public Book(Integer isn, String author, String name, String usersLogin) {
 		super();
 		this.isn = isn;

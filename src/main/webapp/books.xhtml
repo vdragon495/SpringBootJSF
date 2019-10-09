@@ -12,13 +12,15 @@
 		<title>Книги</title>
 	</h:head>
 	<h:body>
-		<h:form>
+		<h:form id="form">
 			<p:commandLink value="Пользователи" action="/users"/><br/>
-			<p:commandButton value="Добавить книгу..." /><br/><br/>
+			<p:commandButton update=":form:bookDetail" value="Добавить книгу..." actionListener="#{booksBean.newBook}" oncomplete="PF('bookDialog').show()"/><br/><br/>
 		    <p:dataTable id="table" var="book" value="#{booksBean.books}">
                    <p:column>
                        <f:facet name="header"># Isn</f:facet>
-                       <h:outputText value="#{book.isn}" />
+                       <p:commandLink update=":form:bookDetail" oncomplete="PF('bookDialog').show()" value="#{book.isn}" title="Редактировать">
+                			<f:setPropertyActionListener value="#{book}" target="#{booksBean.selectedBook}" />
+            		   </p:commandLink>
                    </p:column>
                    <p:column>
                        <f:facet name="header">Автор</f:facet>
@@ -37,6 +39,21 @@
                        <h:outputText value="#{book.usersLogin}"/>
                    </p:column>
             </p:dataTable>
+            
+            <p:dialog header="Книга" widgetVar="bookDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		        <p:outputPanel id="bookDetail" style="text-align:center;">
+		            <p:panelGrid  columns="2" rendered="#{not empty booksBean.selectedBook}">
+		                <h:outputText value="# Isn" />
+		                <h:inputText value="#{booksBean.selectedBook.isn}" disabled="#{empty booksBean.selectedBook.isn}"/>
+		 
+		                <h:outputText value="Автор" />
+		                <h:inputText value="#{booksBean.selectedBook.author}" />
+		 
+		                <h:outputText value="Название" />
+		                <h:inputText value="#{booksBean.selectedBook.name}"/>
+		            </p:panelGrid>
+		        </p:outputPanel>
+		    </p:dialog>
 		</h:form>
 	</h:body>
 </f:view>

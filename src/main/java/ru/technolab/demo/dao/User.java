@@ -3,6 +3,8 @@ package ru.technolab.demo.dao;
 public class User {
 	private String login, passw;
 	
+	public User() {}
+	
 	public User(String login, String passw) {
 		this.login = login;
 		this.passw = passw;

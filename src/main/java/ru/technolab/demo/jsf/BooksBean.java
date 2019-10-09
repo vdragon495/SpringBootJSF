@@ -27,6 +27,8 @@ public class BooksBean {
     @Autowired
     private BookRepository bookRepository;
     
+    private Book selectedBook;
+    
 //    private List<Book> books;
 //    
 //    @Deferred
@@ -42,11 +44,17 @@ public class BooksBean {
 //        return "/product-list.xhtml?faces-redirect=true";
 //    }
     
-    public String getTest1() {
-    	log.info("we here");
-    	return "pass"; }
-    
-    public List<Book> getBooks() {
+    public void newBook() { selectedBook = new Book(); }
+ 
+    public Book getSelectedBook() {
+		return selectedBook;
+	}
+
+	public void setSelectedBook(Book selectedBook) {
+		this.selectedBook = selectedBook;
+	}
+
+	public List<Book> getBooks() {
         return bookRepository.findAll();
     }
 }
