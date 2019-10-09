@@ -13,6 +13,7 @@
 	</h:head>
 	<h:body>
 		<h:form id="form">
+			<p:growl id="growl" showDetail="true" life="2000" autoUpdate="true"/>
 			<p:commandLink value="Пользователи" action="/users"/><br/>
 			<p:commandButton update=":form:bookDetail" value="Добавить книгу..." actionListener="#{booksBean.newBook}" oncomplete="PF('bookDialog').show()"/><br/><br/>
 		    <p:dataTable id="table" var="book" value="#{booksBean.books}">
@@ -44,7 +45,7 @@
 		        <p:outputPanel id="bookDetail" style="text-align:center;">
 		            <p:panelGrid  columns="2" rendered="#{not empty booksBean.selectedBook}">
 		                <h:outputText value="# Isn" />
-		                <h:inputText value="#{booksBean.selectedBook.isn}" disabled="#{empty booksBean.selectedBook.isn}"/>
+		                <h:inputText value="#{booksBean.selectedBook.isn}" disabled="#{not empty booksBean.selectedBook.isn}"/>
 		 
 		                <h:outputText value="Автор" />
 		                <h:inputText value="#{booksBean.selectedBook.author}" />
@@ -52,6 +53,11 @@
 		                <h:outputText value="Название" />
 		                <h:inputText value="#{booksBean.selectedBook.name}"/>
 		            </p:panelGrid>
+		            <div style="margin: 10px; float: right">
+	           			<p:commandButton value="Отмена" type="button" onclick="PF('bookDialog').hide()" style="margin: 5px"/>
+	           			<p:commandButton rendered="#{empty booksBean.selectedBook.isn}" update=":form:table :form:growl" action="#{booksBean.save}" value="Сохранить" onclick="PF('bookDialog').hide()" style="margin: 5px"/>
+	           			<p:commandButton rendered="#{not empty booksBean.selectedBook.isn}" update=":form:table :form:growl" action="#{booksBean.update}" value="Сохранить" onclick="PF('bookDialog').hide()" style="margin: 5px"/>
+	       			</div>
 		        </p:outputPanel>
 		    </p:dialog>
 		</h:form>

@@ -21,7 +21,7 @@ import ru.technolab.demo.dao.UsersRepository;
 @Component(value = "booksBean")
 @ELBeanName(value = "booksBean")
 @Join(path = "/books", to = "/books.xhtml")
-public class BooksBean {
+public class BooksBean extends GenericBean {
 	private static final Logger log = LoggerFactory.getLogger(BooksBean.class);	// Аналогично аннотации Lombok @Slf4j
 	
     @Autowired
@@ -38,11 +38,23 @@ public class BooksBean {
 //        books = bookRepository.findAll();
 //    }
     
-//    public String save() {
-//        productRepository.save(product);
-//        product = new Product();
-//        return "/product-list.xhtml?faces-redirect=true";
-//    }
+    public void save() {
+    	try {
+    		addSavingStatusMessage(bookRepository.save(selectedBook)==1);
+    	} catch(Exception e) {
+    		log.warn("Ошибка сохранения книги: ", e);
+    		addSavingStatusMessage(false);
+    	}
+    }
+
+    public void update() {
+    	try {
+    		addSavingStatusMessage(bookRepository.update(selectedBook)==1);
+    	} catch(Exception e) {
+    		log.warn("Ошибка сохранения книги: ", e);
+    		addSavingStatusMessage(false);
+    	}
+    }
     
     public void newBook() { selectedBook = new Book(); }
  
