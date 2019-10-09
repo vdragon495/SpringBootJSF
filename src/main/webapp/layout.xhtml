@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <h:head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Библиотека</title>
+    </h:head>
+    <h:body>
+        <p:toolbar>
+            <f:facet name="left">
+                <p:button href="/books" value="Книги" />
+                <p:button href="/users" value="Пользователи" />
+            </f:facet>
+        </p:toolbar>
+        <ui:insert name="content" />
+    </h:body>
+</f:view>
+</html>

@@ -3,6 +3,8 @@ package ru.technolab.demo.dao;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,11 @@ public class BookRepository {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@PostConstruct
+	private void init() {
+		log.info("Количество книг = "+findAll().size());
+	}
 
     public List<Book> findAll() {
         return jdbcTemplate.query(

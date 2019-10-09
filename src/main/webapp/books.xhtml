@@ -14,7 +14,26 @@
 	<h:body>
 		<h:form>
 			<p:commandLink value="Пользователи" action="/users"/><br/>
-			<p:commandButton value="Добавить книгу..." />
+			<p:commandButton value="Добавить книгу..." /><br/><br/>
+		    <p:dataTable id="table" var="book" value="#{booksBean.books}">
+                   <p:column>
+                       <f:facet name="header"># Isn</f:facet>
+                       <h:outputText value="#{book.isn}" />
+                   </p:column>
+                   <p:column>
+                       <f:facet name="header">Автор</f:facet>
+                       <h:outputText value="#{book.author}" />
+                   </p:column>
+                   <p:column>
+                       <f:facet name="header">Название</f:facet>
+                       <h:outputText value="#{book.name}" />
+                   </p:column>
+                   <p:column>
+                       <f:facet name="header">взята</f:facet>
+                       <h:outputText value="#{book.usersLogin}"/>
+                   </p:column>
+            </p:dataTable>
+			
 		</h:form>
 	</h:body>
 </f:view>
