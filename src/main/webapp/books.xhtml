@@ -17,26 +17,21 @@
 			<ui:include src="/menu.xhtml"/><br/>
 			<p:commandButton update=":form:bookDetail" value="Добавить книгу..." actionListener="#{booksBean.newBook}" oncomplete="PF('bookDialog').show()"/><br/><br/>
 		    <p:dataTable id="table" var="book" value="#{booksBean.books}" tableStyle="width:auto">
-                   <p:column>
-                       <f:facet name="header"># Isn</f:facet>
+                   <p:column headerText="# Isn">
                        <p:commandLink update=":form:bookDetail" oncomplete="PF('bookDialog').show()" value="#{book.isn}" title="Редактировать">
                 			<f:setPropertyActionListener value="#{book}" target="#{booksBean.selectedBook}" />
             		   </p:commandLink>
                    </p:column>
-                   <p:column>
-                       <f:facet name="header">Автор</f:facet>
+                   <p:column headerText="Автор" sortBy="#{book.author}">
                        <h:outputText value="#{book.author}" />
                    </p:column>
-                   <p:column>
-                       <f:facet name="header">Название</f:facet>
+                   <p:column headerText="Название" sortBy="#{book.name}">
                        <h:outputText value="#{book.name}" />
                    </p:column>
-                   <p:column>
-                       <f:facet name="header">Кем взята</f:facet>
+                   <p:column headerText="Кем взята">
                        <h:outputText value="#{book.usersLogin}"/>
                    </p:column>
-                   <p:column>
-                       <f:facet name="header">Удалить</f:facet>
+                   <p:column headerText="Удалить">
                        <p:commandButton update=":form:removeDetail :form:growl" oncomplete="PF('removeDialog').show()" title="Удалить" class="ph-grid-btn" icon="fa fa-trash-o">
                        		<f:setPropertyActionListener value="#{book}" target="#{booksBean.selectedBook}" />
                        </p:commandButton>

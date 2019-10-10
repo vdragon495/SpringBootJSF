@@ -2,6 +2,8 @@ package ru.technolab.demo.jsf;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.ocpsoft.rewrite.annotation.Join;
 import org.ocpsoft.rewrite.annotation.RequestAction;
 import org.ocpsoft.rewrite.el.ELBeanName;
@@ -28,8 +30,13 @@ public class BooksBean extends GenericBean {
     
     private Book selectedBook;
     
-//    private List<Book> books;
-//    
+    private List<Book> books;
+
+    @PostConstruct
+    public void init() {
+    	books = bookRepository.findAll();
+    }
+    
 //    @Deferred
 //    @RequestAction
 //    @IgnorePostback
@@ -40,6 +47,7 @@ public class BooksBean extends GenericBean {
     public void save() {
     	try {
     		addSavingStatusMessage(bookRepository.save(selectedBook)==1);
+    		init();
     	} catch(Exception e) {
     		log.warn("Ошибка сохранения книги: ", e);
     		addSavingStatusMessage(false);
@@ -49,6 +57,7 @@ public class BooksBean extends GenericBean {
     public void update() {
     	try {
     		addSavingStatusMessage(bookRepository.update(selectedBook)==1);
+    		init();
     	} catch(Exception e) {
     		log.warn("Ошибка сохранения книги: ", e);
     		addSavingStatusMessage(false);
@@ -58,6 +67,7 @@ public class BooksBean extends GenericBean {
     public void delete() {
     	try {
     		addSavingStatusMessage(bookRepository.deleteById(selectedBook.getIsn())==1);
+    		init();
     	} catch(Exception e) {
     		log.warn("Ошибка удаления книги: ", e);
     		addSavingStatusMessage(false);
@@ -75,6 +85,6 @@ public class BooksBean extends GenericBean {
 	}
 
 	public List<Book> getBooks() {
-        return bookRepository.findAll();
+        return books;
     }
 }
