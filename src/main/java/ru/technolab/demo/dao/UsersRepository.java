@@ -54,7 +54,7 @@ public class UsersRepository {
 
     public int deleteById(String login) {
         return jdbcTemplate.update(
-                "delete users where login = ?",
+                "delete testdb.USERS where login = ?",
                 login);
     }
 }

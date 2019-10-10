@@ -5,10 +5,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.ocpsoft.rewrite.annotation.Join;
-import org.ocpsoft.rewrite.annotation.RequestAction;
 import org.ocpsoft.rewrite.el.ELBeanName;
-import org.ocpsoft.rewrite.faces.annotation.Deferred;
-import org.ocpsoft.rewrite.faces.annotation.IgnorePostback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
