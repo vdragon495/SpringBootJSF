@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import ru.technolab.demo.dao.Book;
 import ru.technolab.demo.dao.BookRepository;
-import ru.technolab.demo.dao.UsersRepository;
 
 @Scope(value = "session")
 @Component(value = "booksBean")
@@ -52,6 +51,15 @@ public class BooksBean extends GenericBean {
     		addSavingStatusMessage(bookRepository.update(selectedBook)==1);
     	} catch(Exception e) {
     		log.warn("Ошибка сохранения книги: ", e);
+    		addSavingStatusMessage(false);
+    	}
+    }
+
+    public void delete() {
+    	try {
+    		addSavingStatusMessage(bookRepository.deleteById(selectedBook.getIsn())==1);
+    	} catch(Exception e) {
+    		log.warn("Ошибка удаления книги: ", e);
     		addSavingStatusMessage(false);
     	}
     }

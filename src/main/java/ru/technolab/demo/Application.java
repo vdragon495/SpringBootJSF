@@ -4,11 +4,14 @@ import java.util.EnumSet;
 
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.DispatcherType;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
 import org.ocpsoft.rewrite.servlet.RewriteFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
@@ -33,5 +36,16 @@ public class Application extends SpringBootServletInitializer {
                 DispatcherType.ASYNC, DispatcherType.ERROR));
         rwFilter.addUrlPatterns("/*");
         return rwFilter;
+    }
+    
+    @Bean	// Добавляем иконки
+    public ServletContextInitializer initializer() {
+        return new ServletContextInitializer() {
+
+            @Override
+            public void onStartup(ServletContext servletContext) throws ServletException {
+                servletContext.setInitParameter("primefaces.FONT_AWESOME", "true");
+            }
+        };
     }
 }

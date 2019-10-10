@@ -10,12 +10,13 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Книги</title>
+		<h:outputStylesheet name="css/commons.css" />
 	</h:head>
 	<h:body>
 		<h:form id="form">
 			<ui:include src="/menu.xhtml"/><br/>
 			<p:commandButton update=":form:bookDetail" value="Добавить книгу..." actionListener="#{booksBean.newBook}" oncomplete="PF('bookDialog').show()"/><br/><br/>
-		    <p:dataTable id="table" var="book" value="#{booksBean.books}">
+		    <p:dataTable id="table" var="book" value="#{booksBean.books}" tableStyle="width:auto">
                    <p:column>
                        <f:facet name="header"># Isn</f:facet>
                        <p:commandLink update=":form:bookDetail" oncomplete="PF('bookDialog').show()" value="#{book.isn}" title="Редактировать">
@@ -35,8 +36,10 @@
                        <h:outputText value="#{book.usersLogin}"/>
                    </p:column>
                    <p:column>
-                       <f:facet name="header">удалить</f:facet>
-                       <h:outputText value="#{book.usersLogin}"/>
+                       <f:facet name="header">Удалить</f:facet>
+                       <p:commandButton update=":form:removeDetail :form:growl" oncomplete="PF('removeDialog').show()" title="Удалить" class="ph-grid-btn" icon="fa fa-trash-o">
+                       		<f:setPropertyActionListener value="#{book}" target="#{booksBean.selectedBook}" />
+                       </p:commandButton>
                    </p:column>
             </p:dataTable>
             
@@ -56,6 +59,16 @@
 	           			<p:commandButton value="Отмена" type="button" onclick="PF('bookDialog').hide()" style="margin: 5px"/>
 	           			<p:commandButton rendered="#{empty booksBean.selectedBook.isn}" update=":form:table :form:growl" action="#{booksBean.save}" value="Сохранить" onclick="PF('bookDialog').hide()" style="margin: 5px"/>
 	           			<p:commandButton rendered="#{not empty booksBean.selectedBook.isn}" update=":form:table :form:growl" action="#{booksBean.update}" value="Сохранить" onclick="PF('bookDialog').hide()" style="margin: 5px"/>
+	       			</div>
+		        </p:outputPanel>
+		    </p:dialog>
+		    
+		    <p:dialog header="Удалить" widgetVar="removeDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		        <p:outputPanel id="removeDetail" style="text-align:center;">
+		        	<h:outputText value="Вы уверены что хотите удалить книгу?"/>
+		            <div style="margin: 10px; float: right">
+	           			<p:commandButton value="Нет" type="button" onclick="PF('removeDialog').hide()" style="margin: 5px"/>
+	           			<p:commandButton update=":form:table :form:growl" action="#{booksBean.delete}" value="Да" onclick="PF('removeDialog').hide()" style="margin: 5px"/>
 	       			</div>
 		        </p:outputPanel>
 		    </p:dialog>
