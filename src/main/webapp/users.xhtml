@@ -16,7 +16,7 @@
 		<h:form id="form">
 			<ui:include src="/menu.xhtml"/><br/>
 			<p:commandButton update=":form:userDetail" value="Добавить пользователя..." actionListener="#{usersBean.newUser}" oncomplete="PF('userDialog').show()"/><br/><br/>
-		    <p:dataTable id="table" var="user" value="#{usersBean.users}" tableStyle="width:auto">
+		    <p:dataTable id="table" var="user" value="#{usersBean.users}" tableStyle="width:auto" emptyMessage="Нет записей">
                    <p:column headerText="Имя пользователя">
                        <p:commandLink update=":form:userDetail" oncomplete="PF('userDialog').show()" value="#{user.login}" title="Редактировать">
                 			<f:setPropertyActionListener value="#{user}" target="#{usersBean.selectedUser}" />

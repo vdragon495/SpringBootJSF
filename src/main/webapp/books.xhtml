@@ -16,7 +16,7 @@
 		<h:form id="form">
 			<ui:include src="/menu.xhtml"/><br/>
 			<p:commandButton update=":form:bookDetail" value="Добавить книгу..." actionListener="#{booksBean.newBook}" oncomplete="PF('bookDialog').show()"/><br/><br/>
-		    <p:dataTable id="table" var="book" value="#{booksBean.books}" tableStyle="width:auto">
+		    <p:dataTable id="table" var="book" value="#{booksBean.books}" tableStyle="width:auto" emptyMessage="Нет записей">
                    <p:column headerText="# Isn">
                        <p:commandLink update=":form:bookDetail" oncomplete="PF('bookDialog').show()" value="#{book.isn}" title="Редактировать">
                 			<f:setPropertyActionListener value="#{book}" target="#{booksBean.selectedBook}" />
