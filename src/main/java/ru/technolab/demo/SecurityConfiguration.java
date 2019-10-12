@@ -82,7 +82,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .clearAuthentication(true)
             .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
             .deleteCookies("JSESSIONID")
-            .logoutSuccessUrl("/index.html").permitAll();
+            .logoutSuccessUrl("/index.html");
 
 		http.addFilterAfter(new GenericFilterBean() {
 
