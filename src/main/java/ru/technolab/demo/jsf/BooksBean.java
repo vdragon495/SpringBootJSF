@@ -44,7 +44,11 @@ public class BooksBean extends GenericBean {
     	}
     }
     
-    public void save() {
+    public String getLogin() {
+		return login;
+	}
+
+	public void save() {
     	try {
     		addSavingStatusMessage(bookRepository.save(selectedBook)==1);
     		init();
@@ -75,7 +79,29 @@ public class BooksBean extends GenericBean {
     }
     
     public void newBook() { selectedBook = new Book(); }
- 
+
+    public void getBook(Book book) {
+    	try {
+    		book.setUsersLogin(login);
+    		bookRepository.update(book);
+    		init();
+    	} catch(Exception e) {
+    		log.warn("Ошибка сохранения книги: ", e);
+    		showMsg("Error", "Не удалось взять книгу");
+    	}
+    }
+    
+    public void returnBook(Book book) {
+    	try {
+    		book.setUsersLogin(null);
+    		bookRepository.update(book);
+    		init();
+    	} catch(Exception e) {
+    		log.warn("Ошибка сохранения книги: ", e);
+    		showMsg("Error", "Не удалось вернуть книгу");
+    	}
+    }
+    
     public Book getSelectedBook() {
 		return selectedBook;
 	}

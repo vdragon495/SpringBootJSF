@@ -64,7 +64,7 @@ public class UsersBean extends GenericBean {
     	}
     }
     
-    public void newUser() { selectedUser = new User(); }
+    public void newUser() { selectedUser = new User(); init(); }
  
     public User getSelectedUser() {
 		return selectedUser;

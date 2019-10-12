@@ -43,7 +43,7 @@ public class Application extends SpringBootServletInitializer {
         return new ServletContextInitializer() {
 
             @Override
-            public void onStartup(ServletContext servletContext) throws ServletException {
+            public void onStartup(ServletContext servletContext) throws ServletException {	// Тут инициализируем context_param из web.xml
                 servletContext.setInitParameter("primefaces.FONT_AWESOME", "true");
             }
         };

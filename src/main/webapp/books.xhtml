@@ -29,10 +29,12 @@
                        <h:outputText value="#{book.name}" />
                    </p:column>
                    <p:column headerText="Кем взята">
-                       <h:outputText value="#{book.usersLogin}"/>
+                       <p:commandLink rendered="#{empty book.usersLogin}" update=":form:table" actionListener="#{booksBean.getBook(book)}" value="Взять"/>
+                       <p:commandLink rendered="#{book.usersLogin == booksBean.login}" update=":form:table" actionListener="#{booksBean.returnBook(book)}" value="Вернуть"/>
+                       <h:outputText rendered="#{not empty book.usersLogin and book.usersLogin != booksBean.login}" value="#{book.usersLogin}"/>
                    </p:column>
                    <p:column headerText="Удалить">
-                       <p:commandButton update=":form:removeDetail :form:growl" oncomplete="PF('removeDialog').show()" title="Удалить" class="ph-grid-btn" icon="fa fa-trash-o">
+                       <p:commandButton update=":form:removeDetail" oncomplete="PF('removeDialog').show()" title="Удалить" class="ph-grid-btn" icon="fa fa-trash-o">
                        		<f:setPropertyActionListener value="#{book}" target="#{booksBean.selectedBook}" />
                        </p:commandButton>
                    </p:column>
