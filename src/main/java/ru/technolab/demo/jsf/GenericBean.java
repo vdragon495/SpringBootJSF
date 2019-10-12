@@ -3,6 +3,8 @@ package ru.technolab.demo.jsf;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 public class GenericBean {
 
     protected void addSavingStatusMessage(boolean res) {

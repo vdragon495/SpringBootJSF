@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import ru.technolab.demo.dao.Book;
@@ -28,20 +30,25 @@ public class BooksBean extends GenericBean {
     private Book selectedBook;
     
     private List<Book> books;
+    
+    private String login;
 
     @PostConstruct
     public void init() {
     	books = bookRepository.findAll();
+    	try {
+    		login = ((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+    		log.info("Логин пользователя = "+login);
+    	} catch(Exception e) {
+    		log.warn("Ошибка получения данных пользователя", e);
+    	}
     }
     
-//    @Deferred
-//    @RequestAction
-//    @IgnorePostback
-//    public void loadData() {
-//        books = bookRepository.findAll();
-//    }
-    
-    public void save() {
+    public String getLogin() {
+		return login;
+	}
+
+	public void save() {
     	try {
     		addSavingStatusMessage(bookRepository.save(selectedBook)==1);
     		init();
@@ -72,7 +79,29 @@ public class BooksBean extends GenericBean {
     }
     
     public void newBook() { selectedBook = new Book(); }
- 
+
+    public void getBook(Book book) {
+    	try {
+    		book.setUsersLogin(login);
+    		bookRepository.update(book);
+    		init();
+    	} catch(Exception e) {
+    		log.warn("Ошибка сохранения книги: ", e);
+    		showMsg("Error", "Не удалось взять книгу");
+    	}
+    }
+    
+    public void returnBook(Book book) {
+    	try {
+    		book.setUsersLogin(null);
+    		bookRepository.update(book);
+    		init();
+    	} catch(Exception e) {
+    		log.warn("Ошибка сохранения книги: ", e);
+    		showMsg("Error", "Не удалось вернуть книгу");
+    	}
+    }
+    
     public Book getSelectedBook() {
 		return selectedBook;
 	}
