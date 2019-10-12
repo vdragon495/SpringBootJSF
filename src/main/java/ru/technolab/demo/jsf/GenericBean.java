@@ -31,4 +31,9 @@ public class GenericBean {
                 break;
         }
     }
+    
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/logout";
+    }
 }

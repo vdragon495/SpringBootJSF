@@ -74,14 +74,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// secured
 		http.cors().and().csrf() // Cross Site Request Forgery (CSRF Attacks)
 				.disable() // We don't need CSRF for this example. Без этого PF нормально не работал!!!
-				.authorizeRequests().antMatchers("/").authenticated().and().httpBasic()
-				.authenticationEntryPoint(authenticationEntryPoint);
-//	        .and()
-//            .logout()
-//            .invalidateHttpSession(true)
-//            .clearAuthentication(true)
-//            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//            .logoutSuccessUrl("/");
+				.authorizeRequests().antMatchers("/books", "/users").authenticated().and().httpBasic()
+				.authenticationEntryPoint(authenticationEntryPoint)
+	        .and()
+            .logout()
+            .invalidateHttpSession(true)
+            .clearAuthentication(true)
+            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+            .deleteCookies("JSESSIONID")
+            .logoutSuccessUrl("/index.html").permitAll();
 
 		http.addFilterAfter(new GenericFilterBean() {
 

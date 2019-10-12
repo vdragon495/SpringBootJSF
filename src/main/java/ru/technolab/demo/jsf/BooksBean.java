@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import ru.technolab.demo.dao.Book;
@@ -28,18 +30,19 @@ public class BooksBean extends GenericBean {
     private Book selectedBook;
     
     private List<Book> books;
+    
+    private String login;
 
     @PostConstruct
     public void init() {
     	books = bookRepository.findAll();
+    	try {
+    		login = ((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+    		log.info("Логин пользователя = "+login);
+    	} catch(Exception e) {
+    		log.warn("Ошибка получения данных пользователя", e);
+    	}
     }
-    
-//    @Deferred
-//    @RequestAction
-//    @IgnorePostback
-//    public void loadData() {
-//        books = bookRepository.findAll();
-//    }
     
     public void save() {
     	try {
