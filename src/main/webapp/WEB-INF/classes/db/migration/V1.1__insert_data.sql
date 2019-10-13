@@ -1,1 +1,0 @@
-INSERT INTO testdb.USERS(login, passw) VALUES ('vvv', '111');
