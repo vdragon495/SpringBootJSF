@@ -2,18 +2,19 @@ package ru.technolab.demo.jsf;
 
 import java.util.List;
 
-import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.SessionScoped;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import ru.technolab.demo.dao.User;
 import ru.technolab.demo.dao.UsersRepository;
 
-@SessionScoped
-@ManagedBean
+@Scope(value = "session")
+@Component(value = "usersBean")
 public class UsersBean extends GenericBean {
 	private static final Logger log = LoggerFactory.getLogger(UsersBean.class);	// Аналогично аннотации Lombok @Slf4j
 	
