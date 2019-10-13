@@ -62,31 +62,31 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		// Permit all config:
-//		http.cors().and()
-//	    	.csrf()			// Cross Site Request Forgery (CSRF Attacks)
-//	    	.disable()		// We don't need CSRF for this example
-//	    	.authorizeRequests().antMatchers("/").permitAll();	// dont authenticate this particular request
+		http.cors().and()
+	    	.csrf()			// Cross Site Request Forgery (CSRF Attacks)
+	    	.disable()		// We don't need CSRF for this example
+	    	.authorizeRequests().antMatchers("/").permitAll();	// dont authenticate this particular request
 
 		// secured
-		http.cors().and().csrf() // Cross Site Request Forgery (CSRF Attacks)
-				.disable() // We don't need CSRF for this example. Без этого PF нормально не работал!!!
-				.authorizeRequests().antMatchers("/books", "/users").authenticated().and().httpBasic()
-				.authenticationEntryPoint(authenticationEntryPoint)
-	        .and()
-            .logout()
-            .invalidateHttpSession(true)
-            .clearAuthentication(true)
-            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-            .deleteCookies("JSESSIONID")
-            .logoutSuccessUrl("/index.html");
-
-		http.addFilterAfter(new GenericFilterBean() {
-
-			@Override
-			public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-					throws IOException, ServletException {
-				chain.doFilter(request, response);
-			}
-		}, BasicAuthenticationFilter.class);
+//		http.cors().and().csrf() // Cross Site Request Forgery (CSRF Attacks)
+//				.disable() // We don't need CSRF for this example. Без этого PF нормально не работал!!!
+//				.authorizeRequests().antMatchers("/books", "/users").authenticated().and().httpBasic()
+//				.authenticationEntryPoint(authenticationEntryPoint)
+//	        .and()
+//            .logout()
+//            .invalidateHttpSession(true)
+//            .clearAuthentication(true)
+//            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//            .deleteCookies("JSESSIONID")
+//            .logoutSuccessUrl("/index.html");
+//
+//		http.addFilterAfter(new GenericFilterBean() {
+//
+//			@Override
+//			public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+//					throws IOException, ServletException {
+//				chain.doFilter(request, response);
+//			}
+//		}, BasicAuthenticationFilter.class);
 	}
 }
