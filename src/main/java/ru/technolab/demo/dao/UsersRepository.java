@@ -18,11 +18,6 @@ public class UsersRepository {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	@PostConstruct
-	private void init() {
-		log.info("Количество пользователей = "+findAll().size());
-	}
-	
 	public List<User> findAll() {
         return jdbcTemplate.query(
                 "select login, passw FROM testdb.USERS",

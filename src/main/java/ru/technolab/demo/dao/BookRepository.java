@@ -17,11 +17,6 @@ public class BookRepository {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
-	@PostConstruct
-	private void init() {
-		log.info("Количество книг = "+findAll().size());
-	}
 
     public List<Book> findAll() {
         return jdbcTemplate.query(
