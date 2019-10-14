@@ -1,4 +1,4 @@
-package ru.technolab.demo;
+package ru.technolab.demo.cfg;
 
 import java.io.IOException;
 
@@ -45,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		return new PasswordEncoder() {
+		return new PasswordEncoder() {	// Без шифрования
 			@Override
 			public String encode(CharSequence charSequence) {
 				return charSequence.toString();

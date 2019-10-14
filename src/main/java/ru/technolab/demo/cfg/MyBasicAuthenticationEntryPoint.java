@@ -1,4 +1,4 @@
-package ru.technolab.demo;
+package ru.technolab.demo.cfg;
 
 import java.io.IOException;
 import java.io.PrintWriter;

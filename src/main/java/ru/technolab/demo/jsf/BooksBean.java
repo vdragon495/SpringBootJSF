@@ -1,5 +1,6 @@
 package ru.technolab.demo.jsf;
 
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,10 +12,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import ru.technolab.demo.dao.Book;
 import ru.technolab.demo.dao.BookRepository;
 
+/** Обслуживает страницу /books.xhtml */
 @Scope(value = "session")
 @Component(value = "booksBean")
 public class BooksBean extends GenericBean {
@@ -40,10 +43,12 @@ public class BooksBean extends GenericBean {
     	}
     }
     
+    /** @return	Логин авторизованного пользователя */
     public String getLogin() {
 		return login;
 	}
 
+    /** Сохранение книги по кнопке Сохранить из диалога Добавить книгу... */
 	public void save() {
     	try {
     		addSavingStatusMessage(bookRepository.save(selectedBook)==1);
@@ -54,6 +59,7 @@ public class BooksBean extends GenericBean {
     	}
     }
 
+	/** Сохранение книги по кнопке Сохранить из диалога редактирования книги */
     public void update() {
     	try {
     		addSavingStatusMessage(bookRepository.update(selectedBook)==1);
@@ -64,6 +70,7 @@ public class BooksBean extends GenericBean {
     	}
     }
 
+    /** Удаление книги по кнопке Удалить */
     public void delete() {
     	try {
     		addSavingStatusMessage(bookRepository.deleteById(selectedBook.getIsn())==1);
@@ -74,10 +81,14 @@ public class BooksBean extends GenericBean {
     	}
     }
     
+    /** Вызывается при добавлении книги */
     public void newBook() { selectedBook = new Book(); }
 
+    /** Вызывается при клике по Взять книгу */
     public void getBook(Book book) {
-    	try {
+    	try {    		
+    		book = bookRepository.findById(book.getIsn()).get();
+    		if(!StringUtils.isEmpty(book.getUsersLogin())) throw new ConcurrentModificationException();
     		book.setUsersLogin(login);
     		bookRepository.update(book);
     		init();
@@ -87,6 +98,7 @@ public class BooksBean extends GenericBean {
     	}
     }
     
+    /** Вызывается при клике по Вернуть книгу */
     public void returnBook(Book book) {
     	try {
     		book.setUsersLogin(null);

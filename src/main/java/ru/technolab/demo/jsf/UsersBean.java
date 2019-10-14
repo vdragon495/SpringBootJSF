@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import ru.technolab.demo.dao.User;
 import ru.technolab.demo.dao.UsersRepository;
 
+/** Обслуживает страницу /users.xhtml */
 @Scope(value = "session")
 @Component(value = "usersBean")
 public class UsersBean extends GenericBean {
