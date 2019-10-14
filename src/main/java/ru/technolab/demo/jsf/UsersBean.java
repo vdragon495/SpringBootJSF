@@ -1,7 +1,5 @@
 package ru.technolab.demo.jsf;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -16,24 +14,20 @@ import ru.technolab.demo.dao.UsersRepository;
 /** Обслуживает страницу /users.xhtml */
 @Scope(value = "session")
 @Component(value = "usersBean")
-public class UsersBean extends GenericBean {
+public class UsersBean extends GenericBean<User> {
 	private static final Logger log = LoggerFactory.getLogger(UsersBean.class);	// Аналогично аннотации Lombok @Slf4j
 	
     @Autowired
     private UsersRepository userRepository;
     
-    private User selectedUser;
-    
-    private List<User> users;
-
     @PostConstruct
     public void init() {
-    	users = userRepository.findAll();
+    	setModel(userRepository.findAll());
     }
   
     public void save() {
     	try {
-    		addSavingStatusMessage(userRepository.save(selectedUser)==1);
+    		addSavingStatusMessage(userRepository.save(getSelected())==1);
     		init();
     	} catch(Exception e) {
     		log.warn("Ошибка сохранения пользователя: ", e);
@@ -43,7 +37,7 @@ public class UsersBean extends GenericBean {
 
     public void update() {
     	try {
-    		addSavingStatusMessage(userRepository.update(selectedUser)==1);
+    		addSavingStatusMessage(userRepository.update(getSelected())==1);
     		init();
     	} catch(Exception e) {
     		log.warn("Ошибка сохранения пользователя: ", e);
@@ -53,7 +47,7 @@ public class UsersBean extends GenericBean {
 
     public void delete() {
     	try {
-    		addSavingStatusMessage(userRepository.deleteById(selectedUser.getLogin())==1);
+    		addSavingStatusMessage(userRepository.deleteById(getSelected().getLogin())==1);
     		init();
     	} catch(Exception e) {
     		log.warn("Ошибка удаления пользователя: ", e);
@@ -61,17 +55,5 @@ public class UsersBean extends GenericBean {
     	}
     }
     
-    public void newUser() { selectedUser = new User(); init(); }
- 
-    public User getSelectedUser() {
-		return selectedUser;
-	}
-
-	public void setSelectedUser(User selectedUser) {
-		this.selectedUser = selectedUser;
-	}
-
-	public List<User> getUsers() {
-        return users;
-    }
+    public void newUser() { setSelected(new User()); }
 }

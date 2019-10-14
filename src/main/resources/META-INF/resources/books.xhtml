@@ -16,10 +16,10 @@
 		<h:form id="form">
 			<ui:include src="/menu.xhtml"/><br/>
 			<p:commandButton update=":form:bookDetail" value="Добавить книгу..." actionListener="#{booksBean.newBook}" oncomplete="PF('bookDialog').show()"/><br/><br/>
-		    <p:dataTable id="table" var="book" value="#{booksBean.books}" tableStyle="width:auto" emptyMessage="Нет записей">
+		    <p:dataTable id="table" var="book" value="#{booksBean.model}" tableStyle="width:auto" emptyMessage="Нет записей">
                    <p:column headerText="# Isn">
                        <p:commandLink update=":form:bookDetail" oncomplete="PF('bookDialog').show()" value="#{book.isn}" title="Редактировать">
-                			<f:setPropertyActionListener value="#{book}" target="#{booksBean.selectedBook}" />
+                			<f:setPropertyActionListener value="#{book}" target="#{booksBean.selected}" />
             		   </p:commandLink>
                    </p:column>
                    <p:column headerText="Автор" sortBy="#{book.author}">
@@ -35,27 +35,27 @@
                    </p:column>
                    <p:column headerText="Удалить">
                        <p:commandButton update=":form:removeDetail" oncomplete="PF('removeDialog').show()" title="Удалить" class="ph-grid-btn" icon="fa fa-trash-o">
-                       		<f:setPropertyActionListener value="#{book}" target="#{booksBean.selectedBook}" />
+                       		<f:setPropertyActionListener value="#{book}" target="#{booksBean.selected}" />
                        </p:commandButton>
                    </p:column>
             </p:dataTable>
             
             <p:dialog header="Книга" widgetVar="bookDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
 		        <p:outputPanel id="bookDetail" style="text-align:center;">
-		            <p:panelGrid  columns="2" rendered="#{not empty booksBean.selectedBook}">
+		            <p:panelGrid  columns="2" rendered="#{not empty booksBean.selected}">
 		                <h:outputText value="# Isn" />
-		                <h:inputText value="#{booksBean.selectedBook.isn}" disabled="#{not empty booksBean.selectedBook.isn}"/>
+		                <h:inputText value="#{booksBean.selected.isn}" disabled="#{not empty booksBean.selected.isn}"/>
 		 
 		                <h:outputText value="Автор" />
-		                <h:inputText value="#{booksBean.selectedBook.author}" />
+		                <h:inputText value="#{booksBean.selected.author}" />
 		 
 		                <h:outputText value="Название" />
-		                <h:inputText value="#{booksBean.selectedBook.name}"/>
+		                <h:inputText value="#{booksBean.selected.name}"/>
 		            </p:panelGrid>
 		            <div style="margin: 10px; float: right">
 	           			<p:commandButton value="Отмена" type="button" onclick="PF('bookDialog').hide()" style="margin: 5px"/>
-	           			<p:commandButton rendered="#{empty booksBean.selectedBook.isn}" update=":form:table :form:growl" action="#{booksBean.save}" value="Сохранить" onclick="PF('bookDialog').hide()" style="margin: 5px"/>
-	           			<p:commandButton rendered="#{not empty booksBean.selectedBook.isn}" update=":form:table :form:growl" action="#{booksBean.update}" value="Сохранить" onclick="PF('bookDialog').hide()" style="margin: 5px"/>
+	           			<p:commandButton rendered="#{empty booksBean.selected.isn}" update=":form:table :form:growl" action="#{booksBean.save}" value="Сохранить" onclick="PF('bookDialog').hide()" style="margin: 5px"/>
+	           			<p:commandButton rendered="#{not empty booksBean.selected.isn}" update=":form:table :form:growl" action="#{booksBean.update}" value="Сохранить" onclick="PF('bookDialog').hide()" style="margin: 5px"/>
 	       			</div>
 		        </p:outputPanel>
 		    </p:dialog>

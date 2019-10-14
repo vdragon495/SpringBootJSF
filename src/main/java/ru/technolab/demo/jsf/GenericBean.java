@@ -1,13 +1,33 @@
 package ru.technolab.demo.jsf;
 
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-import org.springframework.security.core.context.SecurityContextHolder;
+public class GenericBean<T> {
+	
+	private T selected;
+	
+	private List<T> model;
 
-public class GenericBean {
+    public T getSelected() {
+		return selected;
+	}
 
-    protected void addSavingStatusMessage(boolean res) {
+	public void setSelected(T selected) {
+		this.selected = selected;
+	}
+
+	public List<T> getModel() {
+		return model;
+	}
+
+	protected void setModel(List<T> model) {
+		this.model = model;
+	}
+
+	protected void addSavingStatusMessage(boolean res) {
         if ( res )
             showMsg( "Success", "Данные сохранены" );
         else

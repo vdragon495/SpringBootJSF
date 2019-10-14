@@ -1,7 +1,6 @@
 package ru.technolab.demo.jsf;
 
 import java.util.ConcurrentModificationException;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -20,21 +19,17 @@ import ru.technolab.demo.dao.BookRepository;
 /** Обслуживает страницу /books.xhtml */
 @Scope(value = "session")
 @Component(value = "booksBean")
-public class BooksBean extends GenericBean {
+public class BooksBean extends GenericBean<Book> {
 	private static final Logger log = LoggerFactory.getLogger(BooksBean.class);	// Аналогично аннотации Lombok @Slf4j
 	
     @Autowired
     private BookRepository bookRepository;
     
-    private Book selectedBook;
-    
-    private List<Book> books;
-    
     private String login;
 
     @PostConstruct
     public void init() {
-    	books = bookRepository.findAll();
+    	setModel(bookRepository.findAll());
     	try {
     		login = ((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
     		log.info("Логин пользователя = "+login);
@@ -51,7 +46,7 @@ public class BooksBean extends GenericBean {
     /** Сохранение книги по кнопке Сохранить из диалога Добавить книгу... */
 	public void save() {
     	try {
-    		addSavingStatusMessage(bookRepository.save(selectedBook)==1);
+    		addSavingStatusMessage(bookRepository.save(getSelected())==1);
     		init();
     	} catch(Exception e) {
     		log.warn("Ошибка сохранения книги: ", e);
@@ -62,7 +57,7 @@ public class BooksBean extends GenericBean {
 	/** Сохранение книги по кнопке Сохранить из диалога редактирования книги */
     public void update() {
     	try {
-    		addSavingStatusMessage(bookRepository.update(selectedBook)==1);
+    		addSavingStatusMessage(bookRepository.update(getSelected())==1);
     		init();
     	} catch(Exception e) {
     		log.warn("Ошибка сохранения книги: ", e);
@@ -73,7 +68,7 @@ public class BooksBean extends GenericBean {
     /** Удаление книги по кнопке Удалить */
     public void delete() {
     	try {
-    		addSavingStatusMessage(bookRepository.deleteById(selectedBook.getIsn())==1);
+    		addSavingStatusMessage(bookRepository.deleteById(getSelected().getIsn())==1);
     		init();
     	} catch(Exception e) {
     		log.warn("Ошибка удаления книги: ", e);
@@ -82,7 +77,7 @@ public class BooksBean extends GenericBean {
     }
     
     /** Вызывается при добавлении книги */
-    public void newBook() { selectedBook = new Book(); }
+    public void newBook() { setSelected(new Book()); }
 
     /** Вызывается при клике по Взять книгу */
     public void getBook(Book book) {
@@ -108,17 +103,5 @@ public class BooksBean extends GenericBean {
     		log.warn("Ошибка сохранения книги: ", e);
     		showMsg("Error", "Не удалось вернуть книгу");
     	}
-    }
-    
-    public Book getSelectedBook() {
-		return selectedBook;
-	}
-
-	public void setSelectedBook(Book selectedBook) {
-		this.selectedBook = selectedBook;
-	}
-
-	public List<Book> getBooks() {
-        return books;
     }
 }
