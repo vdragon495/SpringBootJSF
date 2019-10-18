@@ -33,10 +33,10 @@
 		        <p:outputPanel id="userDetail" style="text-align:center;">
 		            <p:panelGrid  columns="2" rendered="#{not empty usersBean.selected}">
 		                <h:outputText value="Имя пользователя" />
-		                <h:inputText value="#{usersBean.selected.login}" disabled="#{not empty usersBean.selected.login}"/>
+		                <p:inputText value="#{usersBean.selected.login}" disabled="#{not empty usersBean.selected.login}"/>
 		 
 		                <h:outputText value="Пароль" />
-		                <h:inputText value="#{usersBean.selected.passw}" />
+		                <p:password value="#{usersBean.selected.passw}" />
 		            </p:panelGrid>
 		            <div style="margin: 10px; float: right">
 	           			<p:commandButton value="Отмена" type="button" onclick="PF('userDialog').hide()" style="margin: 5px"/>
