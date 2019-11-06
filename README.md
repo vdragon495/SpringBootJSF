@@ -1,5 +1,5 @@
 # SpringBootJSF
-Simple Spring Boot starter 2.1.9.RELEASE for JSF 2.2 (Mojarra) and PrimeFaces 6.0. 
+Simple Spring Boot starter 2.1.9.RELEASE for JSF 2.2 (Mojarra) and PrimeFaces 6.0, builds into the executable jar file. 
 
 Moreover, project contains integration with Spring Security, uses JdbcTemplate, DBMS=H2, initially database fills by the Flyway tool, project build automation of maven.
 
