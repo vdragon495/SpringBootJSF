@@ -5,6 +5,7 @@ Moreover, project contains integration with Spring Security, uses JdbcTemplate, 
 
 ## Run Example Application locally
 To build and run the application you need maven and jre 8+ installed. I used Apache Maven 3.5.4 and jdk 12 on my PC. To download source code you can use command line or something else:
+
 1- Clone this project. 
 ```Shell
 git clone https://github.com/vdragon495/SpringBootJSF.git
