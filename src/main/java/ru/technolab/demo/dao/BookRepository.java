@@ -59,7 +59,7 @@ public class BookRepository {
 
     public int deleteById(Integer isn) {
         return jdbcTemplate.update(
-                "delete testdb.BOOK where isn = ?",
+                "delete from testdb.BOOK where isn = ?",
                 isn);
     }
 }
